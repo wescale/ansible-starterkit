@@ -14,6 +14,7 @@
       set_fact:
         host_key_path: "{{ inventory_dir }}/keys/{{ inventory_hostname }}-key"
         target_port: "{{ ansible_port|default('22', true) }}"
+      tags: last
 
     - name: Check mandatory variable service_user
       fail: msg="service_user is undefined"
@@ -21,7 +22,7 @@
 
     - name: Lookup service_user password
       set_fact:
-        galaxie_passwd: "{{ lookup('password', inventory_dir + '/secrets/' + ansible_hostname + '.' + service_user +'.passwd chars=ascii_letters,digits,hexdigits,punctuation') }}"
+        service_passwd: "{{ lookup('password', inventory_dir + '/secrets/' + inventory_hostname + '.' + service_user +'.pass chars=ascii_letters,digits,hexdigits,punctuation') }}"
       delegate_to: localhost
       become: no
 
@@ -133,7 +134,7 @@
 
     - name: Change password for service_user
       shell: >
-        usermod -p $(echo '{{ galaxie_passwd }}' | openssl passwd -1 -stdin) {{ service_user }}
+        usermod -p $(echo '{{ service_passwd }}' | openssl passwd -1 -stdin) {{ service_user }}
 ######
 # SSH key black magic
 ######
@@ -199,19 +200,9 @@
       when: need_server_key_regen
 
     - name: generating host variables files {{ inventory_dir }}/host_vars/{{ inventory_hostname }}.yml
-      lineinfile:
+      template:
+        src="templates/host_vars.j2"
         dest="{{ inventory_dir }}/host_vars/{{ inventory_hostname }}.yml"
-        line="{{ item.line }}"
-        insertbefore="{{ item.insert_marker }}"
-        create=yes
       delegate_to: localhost
       become: no
-      with_items:
-        - line: "---"
-          insert_marker: "BOF"
-        - line: "ansible_ssh_private_key_file: {{ host_key_path }}"
-          insert_marker: "EOF"
-        - line: "ansible_user: {{ service_user }}"
-          insert_marker: "EOF"
-        - line: "ansible_port: {{ target_port }}"
-          insert_marker: "EOF"
+      tags: last
