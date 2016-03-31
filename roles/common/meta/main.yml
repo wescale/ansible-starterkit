@@ -1,0 +1,14 @@
+---
+galaxy_info:
+  author: Aurélien Maury
+  description: Common configuration for wheezy/jessie servers
+  company: WeScale
+  license: Copyrights @wescale.fr
+  min_ansible_version: 2.0
+  platforms:
+    - name: Debian
+      versions:
+        - wheezy
+        - jessie
+
+dependencies: []

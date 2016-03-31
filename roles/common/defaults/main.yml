@@ -1,0 +1,12 @@
+---
+common_lang: 'en'
+common_locales:
+  - 'en_US.UTF-8'
+common_tzdata_area: 'Etc'
+common_tzdata_zone: 'UTC'
+
+common_ntp_upstream_servers:
+  - 0.amazon.pool.ntp.org
+  - 1.amazon.pool.ntp.org
+  - 2.amazon.pool.ntp.org
+  - 3.amazon.pool.ntp.org
