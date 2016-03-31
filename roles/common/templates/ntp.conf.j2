@@ -1,4 +1,4 @@
-{% for upstream_server in ntp_upstream_servers %}
+{% for upstream_server in common_ntp_upstream_servers %}
 server {{ upstream_server }} iburst
 {% endfor %}
 

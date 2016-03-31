@@ -14,16 +14,6 @@
     dest=/bin/sh
     state=link
 
-- name: destination project directories are ready
-  file:
-    path="{{ item.name }}"
-    state=directory
-    owner=root
-    group=root
-    mode="{{ item.mode }}"
-  with_items:
-    - { name: "{{ common_apps_path }}", mode: "0755" }
-
 - name: goaccess apt repository key is trusted
   apt_key:
     url=http://deb.goaccess.io/gnugpg.key
