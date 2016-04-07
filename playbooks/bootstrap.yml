@@ -178,7 +178,7 @@
 
     - name: leaving trace of key generation
       file:
-        path="/etc/ssh/.glx_generated_keys"
+        path="/etc/ssh/.wscl_generated_keys"
         owner=root
         group=root
         state=touch
