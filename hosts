@@ -1,0 +1,29 @@
+[bastion]
+bastion-training
+
+[front]
+10.42.0.86 groupe=1
+10.42.0.89 groupe=2
+10.42.0.88 groupe=3
+10.42.0.85 groupe=4
+10.42.0.90 groupe=5
+10.42.0.84 groupe=6
+10.42.0.87 groupe=7
+10.42.0.91 groupe=8
+10.42.0.92 groupe=9
+
+[back]
+10.42.1.117 groupe=1
+10.42.1.118 groupe=2
+10.42.1.119 groupe=3
+10.42.1.125 groupe=4
+10.42.1.124 groupe=5
+10.42.1.123 groupe=6
+10.42.1.123 groupe=7
+10.42.1.122 groupe=8
+10.42.1.121 groupe=9
+
+
+[groupes:children]
+front
+back
