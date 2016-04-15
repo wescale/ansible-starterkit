@@ -2,6 +2,7 @@
 - hosts: front_and_back
   become: yes
 
+# definir la variable avec le chemin complet vers votre lé publique
   vars:
     public_key_path=""
 
