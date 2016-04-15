@@ -1,27 +1,40 @@
 ---
-- hosts: front
+- hosts: front_and_back
   become: yes
+
+  vars:
+    public_key_path=""
+
   tasks:
-    - debug: msg="Let's install apache"
+    - user:
+        name=ansible
 
-    # le module aptitude est nécessaire pour réaliser des upgrade full
-    - apt:
-        name=aptitude
+    - file:
+        path=/home/ansible/.ssh
+        state=directory
+        owner=ansible
+        group=ansible
+        mode=0700
 
-    # utiliser le module apt pour faire un update de cache et un upgrade full
-    # @see - http://docs.ansible.com/ansible/apt_module.html
-    #
-    # - ...
+    - authorized_key:
+        user: ansible
+        key: "{{ lookup('file', public_key_path) }}"
 
-    - apt:
-        update_cache=yes
-        upgrade=full
-    # utiliser le module apt pour installer le package apache2
-    # @see - http://docs.ansible.com/ansible/apt_module.html
-    - apt:
-        name=apache2
+    - name: service_user is sudoer
+      lineinfile: >
+        dest=/etc/sudoers.d/service_user
+        regexp='^{{ service_user }}'
+        line='{{ service_user }} ALL=(ALL) NOPASSWD: ALL'
+        state='present'
+        validate='visudo -cf %s'
+        create=yes
 
-    # vérifier que la page par défaut de apache est visible
-    # l'adresse public du serveur front se trouve dans votre fichier d'inventaire
-
+    - name: service_user is sudo without tty
+      lineinfile: >
+        dest=/etc/sudoers.d/service_user
+        regexp='^Defaults:{{ service_user }}'
+        line='Defaults:{{ service_user }} !requiretty'
+        state='present'
+        validate='visudo -cf %s'
+        create=yes
 
