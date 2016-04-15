@@ -1,0 +1,27 @@
+---
+- hosts: front
+  become: yes
+  tasks:
+    - debug: msg="Let's install apache"
+
+    # le module aptitude est nécessaire pour réaliser des upgrade full
+    - apt:
+        name=aptitude
+
+    # utiliser le module apt pour faire un update de cache et un upgrade full
+    # @see - http://docs.ansible.com/ansible/apt_module.html
+    #
+    # - ...
+
+    - apt:
+        update_cache=yes
+        upgrade=full
+    # utiliser le module apt pour installer le package apache2
+    # @see - http://docs.ansible.com/ansible/apt_module.html
+    - apt:
+        name=apache2
+
+    # vérifier que la page par défaut de apache est visible
+    # l'adresse public du serveur front se trouve dans votre fichier d'inventaire
+
+

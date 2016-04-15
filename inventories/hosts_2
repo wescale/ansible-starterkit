@@ -1,0 +1,8 @@
+[bastion]
+bastion
+
+[front]
+10.42.0.69
+
+[back]
+10.42.1.86
