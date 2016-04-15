@@ -2,10 +2,10 @@
 bastion
 
 [front]
-10.42.0.202 public_address=52.48.135.11
+10.42.0.212 public_address=52.50.239.222
 
 [back]
-10.42.1.56
+10.42.1.23
 
 [front_and_back:children]
 front
