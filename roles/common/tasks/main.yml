@@ -1,5 +1,4 @@
 ---
-
 - name: common alias
   copy:
     dest=/etc/profile.d/ll.sh
@@ -13,17 +12,6 @@
     src=/bin/bash
     dest=/bin/sh
     state=link
-
-- name: goaccess apt repository key is trusted
-  apt_key:
-    url=http://deb.goaccess.io/gnugpg.key
-    state=present
-
-- name: goaccess apt repository is active
-  apt_repository:
-    repo="deb http://deb.goaccess.io {{ ansible_distribution_release }} main"
-    state=present
-    update_cache=yes
 
 - name: backports repositories are actives
   apt_repository:
@@ -62,10 +50,8 @@
     - ncdu
     - net-tools
     - procps
-    - goaccess
     - vim
     - jq
-    - zabbix-agent
     - htop
     - rsyslog
     - logrotate
@@ -74,31 +60,6 @@
     - zlib1g-dev
     - zlib1g
     - libcurl4-openssl-dev
-
-- name: common packages are installed
-  apt:
-    pkg="{{ item }}"
-    state=present
-  with_items:
-    - dhcpcd
-  when: ansible_distribution_release == 'wheezy'
-
-- name: common python libraries and tools are installed
-  pip:
-    name="{{ item }}"
-    state=latest
-  with_items:
-    - botocore
-    - boto
-    - awscli
-
-- name: fix DHCPD static route (only for wheezy, Jessie is clean)
-  lineinfile:
-    dest="/etc/default/dhcpcd"
-    regexp="^OPTIONS=.*"
-    line="OPTIONS=(-L)"
-    backup=yes
-  when: ansible_distribution_release == 'wheezy'
 
 - include: ntp.yml
 - include: locale.yml
