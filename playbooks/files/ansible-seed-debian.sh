@@ -24,6 +24,7 @@ apt-get -o Dpkg::Options::="--force-confold" install \
     aptitude            \
     git                 \
     python-apt          \
+    apt-transport-https \
     python-distutils-extra \
     python-setuptools   \
     python-apt-dev      \
