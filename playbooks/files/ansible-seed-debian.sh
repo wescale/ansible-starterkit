@@ -3,11 +3,11 @@
 set -e
 set -x
 
+if [ ! -d "/etc/ansible" ]; then
+
 export DEBIAN_FRONTEND=noninteractive
 echo "Updating APT cache"
 apt-get update
-
-if [ ! -d "/etc/ansible" ]; then
 
 if [ -n "$(dpkg-query -l python-pip 2> /dev/null)" ]; then
     echo "Removing distutils installed 'python-pip' package"
