@@ -1,67 +1,69 @@
 ---
 - name: common alias
   copy:
-    dest=/etc/profile.d/ll.sh
-    content="alias ll=\"ls --color -aul\"\n"
-    owner=root
-    group=root
-    mode=0644
+    dest: "/etc/profile.d/ll.sh"
+    content: "alias ll=\"ls --color -aul\"\n"
+    owner: "root"
+    group: "root"
+    mode: "0644"
 
 - name: /bin/sh is /bin/bash
   file:
-    src=/bin/bash
-    dest=/bin/sh
-    state=link
+    src: "/bin/bash"
+    dest: "/bin/sh"
+    state: link
 
 - name: backports repositories are actives
   apt_repository:
-    repo="{{ item }}"
-    state=present
-    update_cache=yes
+    repo: "{{ item }}"
+    state: present
+    update_cache: yes
   with_items:
     - "deb http://cloudfront.debian.net/debian {{ ansible_distribution_release }}-backports main"
     - "deb-src http://cloudfront.debian.net/debian {{ ansible_distribution_release }}-backports main"
 
 - name: common packages are installed
   apt:
-    pkg="{{ item }}"
-    state=present
+    pkg: "{{ item }}"
+    state: present
   with_items:
-    - mosh
-    - sudo
-    - curl
-    - locales
-    - git
-    - subversion
-    - whois
-    - wget
-    - strace
-    - sysstat
-    - iotop
-    - iperf
-    - lsof
-    - dnsutils
-    - ngrep
-    - htop
-    - netcat
-    - multitail
-    - tmux
-    - tree
-    - ncdu
-    - net-tools
-    - procps
-    - vim
-    - jq
-    - htop
-    - rsyslog
-    - logrotate
-    - unattended-upgrades
-    - build-essential
-    - zlib1g-dev
-    - zlib1g
-    - libcurl4-openssl-dev
+    - "mosh"
+    - "sudo"
+    - "curl"
+    - "locales"
+    - "git"
+    - "subversion"
+    - "whois"
+    - "wget"
+    - "strace"
+    - "sysstat"
+    - "iotop"
+    - "iperf"
+    - "lsof"
+    - "dnsutils"
+    - "ngrep"
+    - "htop"
+    - "netcat"
+    - "multitail"
+    - "tmux"
+    - "tree"
+    - "ncdu"
+    - "net-tools"
+    - "procps"
+    - "vim"
+    - "jq"
+    - "htop"
+    - "rsyslog"
+    - "logrotate"
+    - "unattended-upgrades"
+    - "build-essential"
+    - "zlib1g-dev"
+    - "zlib1g"
+    - "libcurl4-openssl-dev"
 
 - include: ntp.yml
 - include: locale.yml
 - include: ssh.yml
 - include: logs.yml
+
+- meta: flush_handlers
