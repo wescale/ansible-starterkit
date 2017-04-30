@@ -2,8 +2,8 @@
 - name: configuring rsyslog
   lineinfile:
     dest: "/etc/rsyslog.conf"
-    regexp: '{{ item.regexp }}'
-    line: {{ item.line }}
+    regexp: "{{ item.regexp }}"
+    line: "{{ item.line }}"
   with_items:
     - regexp: '.*\$ActionFileDefaultTemplate'
       line: '# $ActionFileDefaultTemplate RSYSLOG_TraditionalFileFormat'

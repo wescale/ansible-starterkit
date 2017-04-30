@@ -7,7 +7,7 @@
   with_items: "{{ common_locales }}"
   notify: update system locale
 
-- name: deconf system time area and zone
+- name: debconf system time area and zone
   debconf:
     name: tzdata
     question: "{{ item.question }}"
